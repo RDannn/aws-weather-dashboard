@@ -1,6 +1,6 @@
-DevOps 30-Day Challenge | Day 1 | Weather Dashboard App
+# **DevOps 30-Day Challenge | Day 1 | Weather Dashboard App**
 
-Weather Data Dashboard System Using AWS S3 and OpenWeather API
+# **Weather Data Dashboard System Using AWS S3 and OpenWeather API**
 
 Overview:
 
@@ -23,7 +23,7 @@ Tracks weather conditions across various cities globally, ideal for applications
 Historical Data Tracking:
 Stores timestamped data entries in S3 for easy retrieval and analysis, helping to build a historical weather dataset for trend analysis.
 
-Technical Architecture:
+# **Technical Architecture**:
 
 Programming Language: Python 3.x
 Cloud Provider: AWS (S3 for storage)
@@ -48,7 +48,7 @@ weather_data_dashboard_system/
 └── .gitignore                      # Git ignore configuration
 Setup Instructions:
 
-Clone the Repository:
+# **Clone the Repository**:
 
 Begin implementing the code in your integrated development environment (IDE) of choice (e.g., VSCode).
 
@@ -104,7 +104,7 @@ Copy code
 python src/weather_dashboard.py
 The application will fetch weather data from the OpenWeather API, store it in the configured S3 bucket, and print detailed weather insights to the console.
 
-Code Explanation:
+# **Code Explanation**:
 
 weather_dashboard.py:
 
@@ -123,7 +123,7 @@ Contains helper functions for data parsing, API requests, and error handling to 
 
 ![alt text](wd3.png)
 
-Scalability and Improvements:
+# **Scalability and Improvements**:
 
 Data Analysis and Reporting:
 Future iterations could incorporate data analysis tools to generate weather reports or visualize trends based on historical data stored in S3.
