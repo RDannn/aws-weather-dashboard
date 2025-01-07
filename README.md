@@ -1,3 +1,11 @@
+<img width="655" alt="ad" src="https://github.com/user-attachments/assets/45b95836-daca-4e95-bd51-c562b109573c" />
+
+
+
+
+
+
+
 # **DevOps 30-Day Challenge | Day 1 | Weather Dashboard App**
 
 # **Weather Data Dashboard System Using AWS S3 and OpenWeather API**
