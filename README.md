@@ -1,5 +1,8 @@
 # **DevOps 30-Day Challenge: A Journey to Cloud Excellence**
 
+![1733162594847](https://github.com/user-attachments/assets/6c8c8bd3-8653-4ad2-9a8c-4f90ed366928)
+
+
 
 Welcome to my DevOps 30-Day Challenge, where passion meets discipline in an ambitious sprint to master the core pillars of cloud computing and DevOps practices. This challenge is more than a personal milestone—it's a demonstration of the drive, technical acumen, and problem-solving skills that employers seek in a modern cloud engineer or solutions architect.
 
