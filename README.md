@@ -29,4 +29,4 @@ Communication and Documentation: A crucial part of this challenge has been docum
 Join Me on This Journey
 This repository is a culmination of effort, passion, and a relentless pursuit of excellence in cloud computing and DevOps. If you’re a hiring manager, recruiter, or fellow tech enthusiast, I invite you to explore this project and see how my skills and experiences can make an impact on your organization.
 
-Whether it’s building scalable cloud architectures, automating workflows, or optimizing delivery pipelines, this challenge demonstrates my readiness to take on the real-world challenges of a cloud engineer or DevOps professional. Let’s innovate together! 🚀
+Whether it’s building scalable cloud architectures, automating workflows, or optimizing delivery pipelines, this challenge demonstrates my readiness to take on the real-world challenges of a cloud engineer or DevOps professional. Let’s innovate together! 🚀 #DevOpsAllStarsChallenge
