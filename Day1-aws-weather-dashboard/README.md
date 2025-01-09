@@ -10,6 +10,8 @@
 
 # **Weather Data Dashboard System Using AWS S3 and OpenWeather API**
 
+A Python-powered weather dashboard app that fetches real-time weather data using the OpenWeather API and securely stores user preferences in Amazon S3.
+
 Overview:
 
 This project demonstrates a scalable and efficient Weather Data Dashboard System built with AWS services, Python, and the OpenWeather API. The system is designed to collect, store, and manage real-time weather data, and can be easily extended to include additional features like data analysis and reporting. This project emphasizes key DevOps principles such as automation, cloud integration, version control, and Python development skills.
