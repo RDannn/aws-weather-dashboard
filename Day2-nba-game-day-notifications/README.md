@@ -84,12 +84,6 @@ SNS_TOPIC_ARN (value: the ARN of the SNS topic).
 Click Save.
 
 
-<img width="1412" alt="sportsapi" src="https://github.com/user-attachments/assets/11c167ac-c1fd-486b-81b0-e59e026f967a" />
-
-
-
-<img width="1406" alt="nbaapi" src="https://github.com/user-attachments/assets/99db4524-3833-442f-b1fe-c2d5ebcc7da3" />
-
 
 
 4. Understanding the Lambda Code
