@@ -20,7 +20,7 @@ You will need the SportsData.io API Key from: https://SportsData.io. 🏀
 
 
 Sign up for a free account and head over to the API resources section to select "NBA."
-Once registered, you can find your API key in the "NBA" section under "Query String Parameters."
+Once registered, you can find your API key in the "NBA" section under "My Subscriptions."
 
 <img width="1409" alt="apikey" src="https://github.com/user-attachments/assets/7c41fbe0-f02b-4420-ace3-c93002882b37" />
 
