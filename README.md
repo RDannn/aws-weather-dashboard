@@ -1,3 +1,8 @@
+![devops](https://github.com/user-attachments/assets/35c3116e-a3f7-4e6b-8764-448228a3b6b2)
+
+
+
+
 # **DevOps 30-Day Challenge: A Journey to Cloud Excellence**
 
 
