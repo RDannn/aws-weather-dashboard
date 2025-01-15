@@ -71,7 +71,11 @@ Configuring AWS Resources
 In the script, we define:
 
 Region: We’re using us-east-1 for simplicity.
-S3 Bucket Name: This must be unique. For example, you might use nba-analytics-datalake-<yourname>.
+S3 Bucket Name: This must be unique. For example, you might use drr-nba-analytics-datalake-<yourname>.
+
+<img width="1241" alt="inputbucketnmae" src="https://github.com/user-attachments/assets/16f5adb7-c82e-44f1-855f-c36da051eaed" />
+
+
 Glue Database Name: This will be something like nba_data_lake, so it’s easy to track the project.
 Athena Output Location: This is where query results will be stored in S3.
 Creating AWS Clients
