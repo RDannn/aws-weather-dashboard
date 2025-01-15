@@ -52,6 +52,10 @@ Store Raw Data in S3:
 
 First, we’ll set up an S3 bucket to hold our unprocessed NBA data in JSON format. This will act as the foundation of our data lake.
 
+Bucket Name: Make the S3 bucket name unique, e.g., nba-datalake-<yourname>.
+
+<img width="1410" alt="bucketname" src="https://github.com/user-attachments/assets/e1e8c66b-e85f-4407-a613-c99a63cf761f" />
+
 Catalog with AWS Glue:
 
 Glue will create a schema (metadata layer) for the raw data in S3. This makes the data queryable using Athena. Think of it as creating a map of your data’s structure so you can navigate it easily.
@@ -89,25 +93,25 @@ We’ll use Python to create clients for S3, Glue, and Athena. This replaces man
 <img width="1409" alt="database py" src="https://github.com/user-attachments/assets/2fbefc58-3a7b-48a4-9844-f63cd91430a9" />
 
 
-Fetching Data
+Fetching Data:
 The script sends an HTTP GET request to the SportsData.io API, authenticates with your API key, and retrieves player stats in JSON format. If there are errors during this step, the script logs the issue for easy debugging.
 
-Uploading Data to S3
+Uploading Data to S3:
 The raw JSON data is uploaded to the S3 bucket. This forms the foundation of our data lake.
 
-Creating Glue Tables
+Creating Glue Tables:
 Glue defines the schema for the NBA data. This includes details like column names (e.g., Player ID, First Name), data types (string, integer), and delimiters (e.g., commas or semicolons).
 
-Configuring Athena
+Configuring Athena:
 Athena queries the data directly in S3. If an output location doesn’t exist, the script creates one automatically.
 
-Main Function
+Main Function:
 The main function ties everything together. It ensures the S3 bucket exists, fetches NBA data, uploads it, creates a Glue table, and sets up Athena for querying. Delays are added between steps to ensure smooth execution.
 
 <img width="1392" alt="fetchpy" src="https://github.com/user-attachments/assets/86278f0d-ef54-4684-a468-72c4a8fcd9a1" />
 
 
-Running the Script
+Running the Script:
 Log in to AWS
 Open the AWS Management Console, and in the search bar, click the arrow next to the bell icon to access CloudShell.
 
@@ -122,7 +126,7 @@ This opens a blank file where you’ll paste the script.
 
 
 
-Get the Code
+Get the Code:
 Go to the Git repository for this project. Under the src folder, find setup_nba_data_lake.py. Click Copy Raw File to grab the entire script. Paste it into your favorite code editor (like VS Code or Sublime Text) for easy edits.
 
 <img width="1413" alt="nanodatalake" src="https://github.com/user-attachments/assets/b97c82e9-4df1-47c3-8be5-a0c1f3c585cf" />
@@ -140,10 +144,6 @@ Make sure to replace your_sportsdata_api_key with your actual API key before sav
 
 <img width="1344" alt="nanoenv" src="https://github.com/user-attachments/assets/bc2ad07d-dcc4-4dc8-9c9f-06b76de5bac5" />
 
-Bucket Name: Make the S3 bucket name unique, e.g., nba-datalake-<yourname>.
-
-<img width="1410" alt="bucketname" src="https://github.com/user-attachments/assets/e1e8c66b-e85f-4407-a613-c99a63cf761f" />
-
 
 Save the File
 In CloudShell, save the script:
@@ -160,7 +160,7 @@ The script will create the S3 bucket, fetch NBA data, catalog it with Glue, and 
 <img width="1130" alt="successpy" src="https://github.com/user-attachments/assets/1ac316d8-b743-49f7-bc0c-de240a6604b8" />
 
 
-Next Steps
+Next Steps:
 Once the data lake is set up, head over to the AWS Management Console to explore your S3 bucket, Glue catalog, and Athena queries. You’ll have a fully functional analytics pipeline ready to go! 
 You will see the players stats in JSON format in the S3 bucket under "raw-data". Click this. Then click "nba_player_data.jsonl" Cick Download to view this information. 
 You can view this JSON information in VSCode for instance. A ton of information 
@@ -197,7 +197,7 @@ Run the code, and your resources will be deleted. Saves money!
 
 And that's a wrap! 🎉 You’ve just built an end-to-end data lake for NBA analytics using Amazon S3, AWS Glue, and Athena. From setting up the raw data storage to querying it like a pro, you've created a fully functional solution that can handle sports stats like a champ. 💪🏀
 
-This project not only shows off your AWS skills but also highlights your ability to design scalable, serverless architectures. Remember, every step you take in building projects like this brings you closer to mastering cloud computing and landing your dream role.
+This project not only shows off your AWS skills but also highlights your ability to design scalable, serverless architectures. 
 
 Stay curious, keep experimenting, and let your passion for cloud solutions shine! 🚀
 
