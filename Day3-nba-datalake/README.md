@@ -86,6 +86,9 @@ Athena Output Location: This is where query results will be stored in S3.
 Creating AWS Clients
 We’ll use Python to create clients for S3, Glue, and Athena. This replaces manual steps in the AWS Management Console, saving time and reducing errors.
 
+<img width="1409" alt="database py" src="https://github.com/user-attachments/assets/2fbefc58-3a7b-48a4-9844-f63cd91430a9" />
+
+
 Fetching Data
 The script sends an HTTP GET request to the SportsData.io API, authenticates with your API key, and retrieves player stats in JSON format. If there are errors during this step, the script logs the issue for easy debugging.
 
@@ -100,6 +103,9 @@ Athena queries the data directly in S3. If an output location doesn’t exist, t
 
 Main Function
 The main function ties everything together. It ensures the S3 bucket exists, fetches NBA data, uploads it, creates a Glue table, and sets up Athena for querying. Delays are added between steps to ensure smooth execution.
+
+<img width="1392" alt="fetchpy" src="https://github.com/user-attachments/assets/86278f0d-ef54-4684-a468-72c4a8fcd9a1" />
+
 
 Running the Script
 Log in to AWS
