@@ -1,4 +1,5 @@
-<img width="655" alt="ad" src="https://github.com/user-attachments/assets/45b95836-daca-4e95-bd51-c562b109573c" />
+![weatherdrawio](https://github.com/user-attachments/assets/8d62c4e4-4582-411c-91f5-858570355201)
+
 
 
 
@@ -9,6 +10,8 @@
 # **DevOps 30-Day Challenge | Day 1 | Weather Dashboard App**
 
 # **Weather Data Dashboard System Using AWS S3 and OpenWeather API**
+
+A Python-powered weather dashboard app that fetches real-time weather data using the OpenWeather API and securely stores user preferences in Amazon S3.
 
 Overview:
 
