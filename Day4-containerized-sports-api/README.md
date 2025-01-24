@@ -55,7 +55,50 @@ You might wonder, why don’t users just query the third-party API directly? The
 
 Let's now breakdown our code! 💻
 
-### Code Breakdown
+## Code Breakdown
+
+### Dockerfile Breakdown:
+
+Specify the Base Image:
+FROM python:3.9-slim
+
+#### Purpose: This line sets the base image for the container. The python:3.9-slim image is a lightweight version of Python 3.9. It is optimized to minimize the size of the container while providing the Python runtime.
+Set the Working Directory:
+
+#### WORKDIR /app
+
+#### Purpose: This sets the working directory inside the container to /app. All subsequent instructions and file operations (e.g., COPY, RUN) will be executed relative to this directory. This structure helps keep your files organized inside the container.
+
+#### Copy the Requirements File:
+COPY requirements.txt requirements.txt
+
+#### Purpose: This copies the requirements.txt file from your local machine into the container's working directory (/app). The requirements.txt file contains a list of Python dependencies your application needs to run.
+
+#### Install Dependencies:
+RUN pip install -r requirements.txt
+
+#### Purpose: This command installs all the Python libraries specified in the requirements.txt file using pip, the Python package installer. This step ensures that the application has all the dependencies it needs.
+
+#### Copy the Application Files:
+COPY . .
+#### Purpose: This copies all the files and directories from your current directory (on your local machine) into the container's working directory (/app). This ensures that your application code and any necessary files are available inside the container.
+
+#### Expose the Application Port:
+EXPOSE 8080
+
+#### Purpose: This specifies that the container will listen for network requests on port 8080. While this doesn't publish the port to the host machine, it informs Docker and anyone using the container that the application runs on this port.
+
+#### Define the Command to Run the Application:
+CMD ["python", "app.py"]
+
+#### Purpose: This sets the default command to execute when the container starts. In this case, it runs the app.py file using Python. The CMD instruction ensures your application launches automatically when the container is started.
+
+#### Summary
+This Dockerfile creates a lightweight containerized environment for a Python application. It ensures that dependencies are installed, the application code is included, and the app is ready to run on port 8080. By using python:3.9-slim as the base image, the container is both efficient and tailored for Python 3.9 applications.
+
+
+#### app.py file:
+
 #### Imports: 
 from flask import Flask, jsonify import requests import os
 
@@ -136,6 +179,26 @@ This code builds a simple Flask-based API endpoint to fetch and return NFL sched
 Secure API key management via environment variables.
 External API integration with requests.
 Error handling and response formatting for clean JSON outputs.
+
+#### requirements.txt
+
+#### Code Breakdown
+Flask==2.2.5
+
+#### Purpose: This specifies the version of the Flask framework being used.
+Flask is essential for creating and running the web server for your application.
+Version 2.2.5 ensures compatibility with other dependencies and the project code.
+requests==2.31.0
+
+#### Purpose: This sets the version of the requests library.
+Used for making HTTP requests to external APIs, like SerpAPI in the app.
+Version 2.31.0 ensures the latest bug fixes and features for handling HTTP requests.
+
+#### Summary: These two dependencies (Flask and requests) are critical for the app:
+
+Flask runs the web server and handles routing.
+Requests fetches data from external APIs (e.g., NFL schedule from SerpAPI).
+This is your requirements.txt file, which ensures that your environment installs the exact versions of these libraries needed for consistent functionality.
 
 ### What’s Next?
 
