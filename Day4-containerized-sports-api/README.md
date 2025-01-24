@@ -57,6 +57,9 @@ Let's now breakdown our code! 💻
 
 ## Code Breakdown
 
+<img width="1065" alt="dockerfilee" src="https://github.com/user-attachments/assets/53829887-1719-4af2-8772-92401b06f3e1" />
+
+
 ### Dockerfile Breakdown:
 
 Specify the Base Image:
@@ -97,7 +100,10 @@ CMD ["python", "app.py"]
 This Dockerfile creates a lightweight containerized environment for a Python application. It ensures that dependencies are installed, the application code is included, and the app is ready to run on port 8080. By using python:3.9-slim as the base image, the container is both efficient and tailored for Python 3.9 applications.
 
 
-#### app.py file:
+### app.py file:
+
+<img width="1081" alt="app" src="https://github.com/user-attachments/assets/e9795ded-c0fd-450d-b8f5-56c448137e75" />
+
 
 #### Imports: 
 from flask import Flask, jsonify import requests import os
@@ -180,7 +186,10 @@ Secure API key management via environment variables.
 External API integration with requests.
 Error handling and response formatting for clean JSON outputs.
 
-#### requirements.txt
+### requirements.txt file:
+
+<img width="832" alt="requirements" src="https://github.com/user-attachments/assets/ec5b2983-2feb-4e4c-af24-bab9dde38a3e" />
+
 
 #### Code Breakdown
 Flask==2.2.5
