@@ -248,11 +248,22 @@ aws ecr get-login-password --region us-east-1 | docker login --username AWS --pa
 Replace <AWS_ACCOUNT_ID> with your AWS account ID (you can find it in the AWS console).
 Once logged in successfully, you should see Login Succeeded.
 
+<img width="1435" alt="clipassword" src="https://github.com/user-attachments/assets/90f9c61f-9c15-453f-b3cd-825b99a42932" />
+
+
 Step 4: Build Docker Image
 
 Make sure Docker is running and in the correct project directory.
+
+<img width="1264" alt="dockerstart" src="https://github.com/user-attachments/assets/a0330b4b-d6d5-4cc9-b5d5-3286900030fb" />
+
+
 Run the following command to build your Docker image:
 docker build --platform linux/amd64 -t sports-api .
+
+<img width="1430" alt="dockerbuild" src="https://github.com/user-attachments/assets/03967e6c-7eb8-416b-accd-3d3719a66ec7" />
+
+
 After the build completes, verify the image by listing Docker images:
 docker images
 
@@ -286,6 +297,9 @@ Step 6: Set Up ECS Cluster with Fargate
 Open the AWS console and navigate to ECS (Elastic Container Service).
 Click Clusters, then click Create Cluster.
 Name the cluster sports-api-cluster and leave all default settings. Click Create.
+
+<img width="1435" alt="cluster" src="https://github.com/user-attachments/assets/c301fe38-e1b1-43fa-8f1b-73c6471bf4c7" />
+
 
 Step 7: Create ECS Task Definition
 
