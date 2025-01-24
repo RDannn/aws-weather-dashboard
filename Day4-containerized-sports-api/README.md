@@ -1,0 +1,200 @@
+# Sports API Management System
+
+
+Welcome to an exciting new project! Today, we’re building our very own endpoint – a custom URL where users can search and retrieve updated NFL game schedules. With the Playoff season underway, the stakes are high as teams battle for a spot in the Super Bowl! 🏈
+
+In this project, we’ll leverage several AWS services to bring our API to life, including containers, load balancers, and API Gateway. Let's dive in!
+
+### What is a Container?
+
+You’re probably wondering, what exactly is a container? A container is a lightweight, portable unit that bundles everything an application needs to run. This includes application code, libraries, environment variables, configuration files, and runtime libraries. The beauty of containers is that they allow the application to run consistently across different environments – no more compatibility issues! For example, if we run a Python app in a container, it will work even if the host machine doesn’t have Python installed.
+
+Containers are smaller, faster, and more efficient than traditional virtual machines. Instead of running an entire operating system, containers run as isolated environments within a host operating system, such as Linux or Windows. Think of containers as mini virtual machines that hold everything needed to run the application – the infrastructure (CPU, memory, storage), the operating system, and the container engine that manages it all.
+
+In simple terms, a container is like a fully-built house that people can move into. The application runs in this isolated environment, ready to go. In this project, we’re using a container to host a Python Flask app. Cool, right?
+
+### Overview of the Project
+
+Our container will hold the application code, libraries, dependencies, and everything else necessary to run the Python Flask app. This self-contained environment makes the app lightweight and portable – you can run it anywhere! We’ll be using AWS ECS (Elastic Container Service) to manage our container in the cloud, which simplifies the process of handling containers at scale.
+
+The Flask app will request data from a third-party API that provides NFL game schedules. We don’t need to worry about the backend – the external API does all the heavy lifting. For those unfamiliar with APIs: an API (Application Programming Interface) is a set of rules that allows different software applications to communicate with each other. In our case, the API will send NFL game data in JSON format, which we’ll then reformat into a user-friendly format inside the container.
+
+High Availability and Redundancy:
+
+Now, you might be wondering: What if one container fails? To ensure high availability and redundancy, we’ll use two containers. If one container goes down, the other can step in to serve the request. This setup helps us maintain reliability, even if something goes wrong.
+
+Handling Traffic with Load Balancers:
+
+As our service becomes more popular, we’ll likely experience increased traffic. What happens when thousands (or more!) of users request NFL game schedules at the same time? This could overwhelm our system and cause containers to crash or slow down. So, how do we ensure our system can handle high traffic without crashing?
+
+We use a load balancer! A load balancer distributes traffic evenly across multiple containers to prevent any one container from getting overloaded. For this project, we’ll use an AWS Application Load Balancer (ALB). The ALB will manage incoming requests, distributing them evenly between the two containers. If 1,000 requests come in, the load balancer will send 500 to each container. Simple, right?
+
+Adding Security and Throttling with API Gateway:
+
+To add an extra layer of security and prevent abuse, we’ll implement an API Gateway. The API Gateway will sit in front of the load balancer and act as the main access point for users. It allows us to secure, authorize, and throttle requests. For example, if someone tries to make too many requests at once, the API Gateway can limit their access, preventing our system from becoming overwhelmed.
+
+The Flow of Data:
+
+Here’s how the data flows in this system:
+
+User Requests: Users will send requests to the API Gateway for NFL game schedule information.
+
+API Gateway: The API Gateway will handle these requests, sending them to the Application Load Balancer.
+
+Load Balancer: The ALB will distribute the requests evenly between our two containers.
+
+Containers: The containers will use the Flask app to query the third-party API for NFL game data.
+
+Reformatted Data: The Flask app will reformat the raw JSON data from the third-party API into a human-readable format.
+
+Response: The data is sent back through the load balancer and API Gateway to the user.
+W
+hy Not Just Contact the API Directly?
+
+You might wonder, why don’t users just query the third-party API directly? The answer is that the raw data from the third-party API isn’t organized in a user-friendly way. Our Flask app inside the container takes care of transforming the raw JSON into a clean, organized schedule that’s easy for users to read.
+
+### What’s Next?
+
+In the next steps, we’ll explore how we can package everything in Docker and deploy it using ECS with Fargate, AWS’s serverless compute service for containers. This will allow us to run the containers without worrying about managing the underlying infrastructure. We’ll also see how the Application Load Balancer distributes traffic, and how the API Gateway adds security, throttling, and monitoring to our system.
+
+Now, let’s dive into the detailed steps for setting up this API from scratch!
+
+## Step-by-Step: Containerizing and Deploying a Sports API with ECS and Fargate
+
+Step 1: Create Local Folder and Clone Repository
+
+Open your terminal and create a new folder:
+mkdir -p "Day4-containerized-sports-api" is my folder for instance
+Change the directory to the folder:
+cd Day4-containerized-sports-api
+Clone the GitHub repository containing your project. You can create a new repository on GitHub:
+git clone https://github.com/RDannn/DevOps-30-Day-Challenge.git for instance, my repository name
+After cloning, navigate to the project folder:
+cd DevOps-30-Day-Challenge for an example.
+
+
+Step 2: Create ECR Repository
+
+On your CLI input: aws ecr create-repository --repository-name sports-api --region us-east-1 to create a new Elastic Container Registry (ECR) repository
+Go to the AWS console and search for "ECR" to see your new repository listed under Elastic Container Registry.
+
+Step 3: Authenticate Docker to ECR
+
+Retrieve a temporary authentication token for Docker to log into ECR:
+aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin <AWS_ACCOUNT_ID>.dkr.ecr.us-east-1.amazonaws.com
+Replace <AWS_ACCOUNT_ID> with your AWS account ID (you can find it in the AWS console).
+Once logged in successfully, you should see Login Succeeded.
+
+Step 4: Build Docker Image
+
+Make sure Docker is running and in the correct project directory.
+Run the following command to build your Docker image:
+docker build --platform linux/amd64 -t sports-api .
+After the build completes, verify the image by listing Docker images:
+docker images
+
+Step 5: Tag and Push Docker Image to ECR
+
+Tag your Docker image to associate it with the ECR repository:
+docker tag sports-api:latest <AWS_ACCOUNT_ID>.dkr.ecr.us-east-1.amazonaws.com/sports-api:sports-api-latest
+Push the image to the ECR repository:
+docker push <AWS_ACCOUNT_ID>.dkr.ecr.us-east-1.amazonaws.com/sports-api:sports-api-latest
+If you encounter an authorization token error, like I did! smh, reauthenticate by running the following:
+aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin <AWS_ACCOUNT_ID>.dkr.ecr.us-east-1.amazonaws.com
+After successfully pushing, verify the image in the AWS console under your ECR repository.
+
+Step 6: Set Up ECS Cluster with Fargate
+
+Open the AWS console and navigate to ECS (Elastic Container Service).
+Click Clusters, then click Create Cluster.
+Name the cluster sports-api-cluster and leave all default settings. Click Create.
+
+Step 7: Create ECS Task Definition
+
+Navigate to Task Definitions in the ECS console and click Create new Task Definition.
+Select Fargate as the launch type, then click Next Step.
+Name the Task Definition family sports-api-task, and under Container Definitions, add a new container:
+Container name: sports-api-container
+Image URI: Paste the ECR image URI from your repository.
+Container port: 8080 (since your app.py exposes this port).
+Environment variables:
+Key: SPORTS_API_KEY
+Value: Your API key from SerpAPI (Sign up for SerpAPI at serpapi.com for your key).
+Click Create to complete the task definition.
+
+Step 8: Create ECS Service
+
+Go back to the sports-api-cluster and click Create under Service.
+Choose Fargate as the launch type, and select the sports-api-task definition.
+Set the Service name to sports-api-service.
+Set Desired tasks to 2 (for two containers to be deployed for high availability).
+Under Networking, select your VPC and subnets, ensuring the security group allows HTTP traffic on port 8080. Create a new security group if needed.
+For Load balancing, select Application Load Balancer and name it sports-api-alb.
+Click Create to set up the ECS service with load balancing. 
+
+Step 9: Test Application Load Balancer
+
+Once the load balancer is provisioned, go to EC2 in the AWS console.
+Under Load Balancing, find your sports-api-alb and copy the DNS name.
+Test the DNS name in your browser. You should receive a response from the sports-api endpoint with NFL game schedules if everything is working correctly.
+
+
+Troubleshoot:
+
+If any errors occur, check the CloudWatch logs for detailed debugging. Ensure that your ECS service is running and check the security group settings for correct inbound and outbound traffic rules.
+
+Last Step! 🏈 Configure API Gateway
+Alright, it's time to expose our Sports API using API Gateway! This step is all about creating the interface that connects users to your app. Let's make it happen! 🚀
+
+Step 1: Set Up API Gateway
+
+Head over to the AWS Management Console and search for API Gateway in the search bar.
+Under REST API, select Build.
+Step 2: Create Your API
+
+For the API name, enter: Sports API.
+Click Create API.
+Step 3: Add the Resource
+
+Time to create your endpoint! Name the resource /sports. This is the actual API path.
+Click Create Resource.
+Step 4: Define the Method
+
+Now, let's add functionality to our resource. Click Create Method.
+For Method Type, select GET.
+This request will use HTTP Proxy Integration. Enter GET as the method and provide the Endpoint URL.
+Endpoint URL Setup:
+
+Go to the EC2 Dashboard. Under Load Balancers, locate your Application Load Balancer (ALB).
+Copy the DNS Name of the ALB. Your endpoint URL should look something like this:
+http://sports-api-alb-414429727.us-east-1.elb.amazonaws.com/sports.
+Don’t forget to include /sports at the end—this is critical because it points to the /sports route in your app.py.
+Scroll down and click Create Method.
+Step 5: Deploy Your API
+
+Click Deploy API.
+For Deployment Stage, create a new stage and name it dev.
+Click Deploy.
+Step 6: Test Your API
+
+Copy the Invoke URL from your API stage. It will look like this:
+https://<api-id>.execute-api.us-east-1.amazonaws.com/dev/sports.
+Paste this URL into your browser, ensuring you add /sports at the end.
+🎉 Boom! The NFL schedule is live! You’ve built a fully functional API that provides real-time data. How cool is that? 🏈
+
+Clean-Up Checklist
+Before wrapping up, let’s delete the resources we created to avoid unnecessary costs:
+
+Delete API Gateway: Go to the API Gateway console and delete the Sports API.
+Remove the ALB: Navigate to the EC2 dashboard, select your Load Balancer, and delete it.
+ECS and ECR:
+Update your ECS service by setting the Desired Tasks to 0.
+Delete the ECS service, cluster, and any remaining tasks.
+Remove your ECR repository.
+Reflect and Celebrate
+You just architected an API from scratch that connects an application load balancer to an endpoint delivering NFL game schedules! 🏈
+
+This is the same foundation used in real-world, scalable projects. The skills you applied here—API Gateway, ECS, ECR, and ALB—are the backbone of cloud-based applications.
+
+Now, let’s keep building and pushing boundaries. Sky’s the limit! 🚀
+
