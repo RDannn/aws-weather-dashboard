@@ -53,6 +53,90 @@ hy Not Just Contact the API Directly?
 
 You might wonder, why don’t users just query the third-party API directly? The answer is that the raw data from the third-party API isn’t organized in a user-friendly way. Our Flask app inside the container takes care of transforming the raw JSON into a clean, organized schedule that’s easy for users to read.
 
+Let's now breakdown our code! 💻
+
+### Code Breakdown
+#### Imports: 
+from flask import Flask, jsonify import requests import os
+
+#### Purpose: 
+Import necessary libraries: Flask for creating the web server and handling HTTP routes.
+requests for making HTTP calls to SerpAPI.
+os for fetching the environment variable (SPORTS_API_KEY).
+
+#### App Initialization:
+app = Flask(__name__)
+#### Purpose: 
+Initializes the Flask app to handle routes.
+
+#### Set API Details:
+SERP_API_URL = "https://serpapi.com/search.json" SERP_API_KEY = os.getenv("SPORTS_API_KEY")
+
+#### Purpose:
+SERP_API_URL is the base URL for SerpAPI queries.
+SERP_API_KEY is pulled from the environment to keep credentials secure.
+
+#### Route Definition:
+@app.route('/sports', methods=['GET'])
+
+#### Purpose: Sets up the /sports endpoint to handle GET requests.
+Fetch and Format NFL Schedule:
+def get_nfl_schedule():
+
+#### Purpose: Defines the function to fetch NFL schedules and return them as JSON.
+
+#### Query SerpAPI:
+params = {
+    "engine": "google",
+    "q": "nfl schedule",
+    "api_key": SERP_API_KEY
+}
+response = requests.get(SERP_API_URL, params=params)
+response.raise_for_status()
+data = response.json()
+
+#### Purpose:
+Prepares query parameters (engine, q, and api_key).
+Sends a GET request to SerpAPI and fetches the response as JSON.
+Extract Games:
+games = data.get("sports_results", {}).get("games", [])
+
+#### Purpose: Retrieves the list of games under the sports_results key. Defaults to an empty list if no games are found.
+Format Games:
+formatted_games = []
+for game in games:
+    teams = game.get("teams", [])
+    ...
+    game_info = { ... }
+    formatted_games.append(game_info)
+
+#### Purpose:
+Loops through the games list.
+Extracts away_team, home_team, venue, date, and time.
+Appends formatted game details to formatted_games.
+
+#### Return Response:
+return jsonify({"message": "NFL schedule fetched successfully.", "games": formatted_games}), 200
+Purpose: Sends the formatted NFL schedule as a JSON response with an HTTP status of 200.
+
+#### Error Handling:
+except Exception as e:
+    return jsonify({"message": "An error occurred.", "error": str(e)}), 500
+
+#### Purpose: Catches and returns any errors that occur during execution.
+Run the App:
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=8080)
+
+#### Purpose: Starts the Flask application, making it accessible on port 8080 for all network interfaces.
+
+#### Summary
+This code builds a simple Flask-based API endpoint to fetch and return NFL schedules using SerpAPI. It handles:
+
+Secure API key management via environment variables.
+External API integration with requests.
+Error handling and response formatting for clean JSON outputs.
+
 ### What’s Next?
 
 In the next steps, we’ll explore how we can package everything in Docker and deploy it using ECS with Fargate, AWS’s serverless compute service for containers. This will allow us to run the containers without worrying about managing the underlying infrastructure. We’ll also see how the Application Load Balancer distributes traffic, and how the API Gateway adds security, throttling, and monitoring to our system.
