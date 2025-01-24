@@ -306,37 +306,62 @@ Step 1: Set Up API Gateway
 
 Head over to the AWS Management Console and search for API Gateway in the search bar.
 Under REST API, select Build.
+
 Step 2: Create Your API
 
 For the API name, enter: Sports API.
 Click Create API.
+
 Step 3: Add the Resource
 
 Time to create your endpoint! Name the resource /sports. This is the actual API path.
 Click Create Resource.
+
 Step 4: Define the Method
 
 Now, let's add functionality to our resource. Click Create Method.
 For Method Type, select GET.
 This request will use HTTP Proxy Integration. Enter GET as the method and provide the Endpoint URL.
+
+<img width="1418" alt="httproxy" src="https://github.com/user-attachments/assets/b49cfde7-7fa4-477e-8a31-2ad4ef4c9d2b" />
+
+
 Endpoint URL Setup:
 
 Go to the EC2 Dashboard. Under Load Balancers, locate your Application Load Balancer (ALB).
 Copy the DNS Name of the ALB. Your endpoint URL should look something like this:
 http://sports-api-alb-414429727.us-east-1.elb.amazonaws.com/sports.
+
+<img width="1421" alt="dns" src="https://github.com/user-attachments/assets/280474cf-74f2-49cc-8e10-d48ab27f7224" />
+
+
 Don’t forget to include /sports at the end—this is critical because it points to the /sports route in your app.py.
 Scroll down and click Create Method.
+
 Step 5: Deploy Your API
 
 Click Deploy API.
 For Deployment Stage, create a new stage and name it dev.
 Click Deploy.
+
+<img width="1236" alt="deployapi" src="https://github.com/user-attachments/assets/b6bf750f-d238-4e1d-ae6d-ac958c0767a1" />
+
 Step 6: Test Your API
 
 Copy the Invoke URL from your API stage. It will look like this:
 https://<api-id>.execute-api.us-east-1.amazonaws.com/dev/sports.
+
+<img width="1418" alt="invokeurl" src="https://github.com/user-attachments/assets/052a2ccc-76b1-4b06-89e6-a94d58e3cab6" />
+
+
 Paste this URL into your browser, ensuring you add /sports at the end.
+
+<img width="674" alt="browseraddress" src="https://github.com/user-attachments/assets/4f41008a-4377-4442-a03a-d93beaece64d" />
+
 🎉 Boom! The NFL schedule is live! You’ve built a fully functional API that provides real-time data. How cool is that? 🏈
+
+<img width="1343" alt="gamsched" src="https://github.com/user-attachments/assets/e41eb44a-79fe-4adf-b11f-709c81fa6efc" />
+
 
 Clean-Up Checklist
 Before wrapping up, let’s delete the resources we created to avoid unnecessary costs:
