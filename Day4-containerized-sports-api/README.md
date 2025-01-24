@@ -232,7 +232,14 @@ cd DevOps-30-Day-Challenge for an example.
 Step 2: Create ECR Repository
 
 On your CLI input: aws ecr create-repository --repository-name sports-api --region us-east-1 to create a new Elastic Container Registry (ECR) repository
+
+<img width="1432" alt="ecrreposcli" src="https://github.com/user-attachments/assets/acd4c8b9-7e08-4f13-8004-e043a3a78f8a" />
+
+
 Go to the AWS console and search for "ECR" to see your new repository listed under Elastic Container Registry.
+
+<img width="1437" alt="ecr" src="https://github.com/user-attachments/assets/564eab31-dbb6-4c78-96ac-524fc62be008" />
+
 
 Step 3: Authenticate Docker to ECR
 
@@ -253,11 +260,26 @@ Step 5: Tag and Push Docker Image to ECR
 
 Tag your Docker image to associate it with the ECR repository:
 docker tag sports-api:latest <AWS_ACCOUNT_ID>.dkr.ecr.us-east-1.amazonaws.com/sports-api:sports-api-latest
+
+<img width="1439" alt="dockertag" src="https://github.com/user-attachments/assets/70289928-27a3-4c50-ae2d-42274d21eab2" />
+
+
 Push the image to the ECR repository:
 docker push <AWS_ACCOUNT_ID>.dkr.ecr.us-east-1.amazonaws.com/sports-api:sports-api-latest
+
+<img width="1413" alt="pushcli" src="https://github.com/user-attachments/assets/f8193b36-f70e-4f89-a85b-b76f32462fdb" />
+
+
 If you encounter an authorization token error, like I did! smh, reauthenticate by running the following:
 aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin <AWS_ACCOUNT_ID>.dkr.ecr.us-east-1.amazonaws.com
+
+<img width="1434" alt="authenticaterror" src="https://github.com/user-attachments/assets/b798319f-75b7-4c7f-a618-af65542be13c" />
+
+
 After successfully pushing, verify the image in the AWS console under your ECR repository.
+
+<img width="1440" alt="ecrimage" src="https://github.com/user-attachments/assets/21aecd7e-9f78-486a-8af4-97e94a973eca" />
+
 
 Step 6: Set Up ECS Cluster with Fargate
 
@@ -272,6 +294,10 @@ Select Fargate as the launch type, then click Next Step.
 Name the Task Definition family sports-api-task, and under Container Definitions, add a new container:
 Container name: sports-api-container
 Image URI: Paste the ECR image URI from your repository.
+
+<img width="1421" alt="ecruri" src="https://github.com/user-attachments/assets/1bcdca58-278a-4b8a-9f64-555246928d8a" />
+
+
 Container port: 8080 (since your app.py exposes this port).
 
 <img width="1403" alt="task8080" src="https://github.com/user-attachments/assets/84dbcd88-8ca3-43e3-ad9d-b10d8dafc593" />
