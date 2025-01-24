@@ -273,17 +273,40 @@ Name the Task Definition family sports-api-task, and under Container Definitions
 Container name: sports-api-container
 Image URI: Paste the ECR image URI from your repository.
 Container port: 8080 (since your app.py exposes this port).
+
+<img width="1403" alt="task8080" src="https://github.com/user-attachments/assets/84dbcd88-8ca3-43e3-ad9d-b10d8dafc593" />
+
+
 Environment variables:
 Key: SPORTS_API_KEY
 Value: Your API key from SerpAPI (Sign up for SerpAPI at serpapi.com for your key).
+
+<img width="1418" alt="serpapi" src="https://github.com/user-attachments/assets/eb720df6-2992-428c-a5a1-2299fefdeaac" />
+
+<img width="1438" alt="serpapikey" src="https://github.com/user-attachments/assets/dd93902c-b750-4caa-852f-41d1e9ab9cb6" />
+
+
+
 Click Create to complete the task definition.
 
 Step 8: Create ECS Service
 
 Go back to the sports-api-cluster and click Create under Service.
+
+<img width="1356" alt="sportservice" src="https://github.com/user-attachments/assets/8b2071e8-a29a-47b2-8490-53820dcab563" />
+
+
 Choose Fargate as the launch type, and select the sports-api-task definition.
 Set the Service name to sports-api-service.
+
+<img width="1438" alt="taskdef" src="https://github.com/user-attachments/assets/e4af7509-0d46-4178-bc12-4578a1e2dda5" />
+
+
 Set Desired tasks to 2 (for two containers to be deployed for high availability).
+
+<img width="1437" alt="sportsapitask" src="https://github.com/user-attachments/assets/fd367dff-6ee1-46df-aff6-f8d263964c68" />
+
+
 Under Networking, select your VPC and subnets, ensuring the security group allows HTTP traffic on port 8080. Create a new security group if needed.
 For Load balancing, select Application Load Balancer and name it sports-api-alb.
 Click Create to set up the ECS service with load balancing. 
