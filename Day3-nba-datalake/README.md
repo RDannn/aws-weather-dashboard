@@ -197,6 +197,8 @@ Run the code, and your resources will be deleted. Saves money!
 
 And that's a wrap! 🎉 You’ve just built an end-to-end data lake for NBA analytics using Amazon S3, AWS Glue, and Athena. From setting up the raw data storage to querying it like a pro, you've created a fully functional solution that can handle sports stats like a champ. 💪🏀
 
+##DevOpsAllStarChallenge 
+
 This project not only shows off your AWS skills but also highlights your ability to design scalable, serverless architectures. 
 
 Stay curious, keep experimenting, and let your passion for cloud solutions shine! 🚀
