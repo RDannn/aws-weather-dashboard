@@ -143,3 +143,5 @@ Check your email for game updates sent via SNS.
 
 
 This architecture demonstrates the use of AWS Lambda, SNS, and EventBridge in a serverless and event-driven application, effectively integrating external APIs with AWS services.
+
+#DevOpsAllStarChallenge 
