@@ -149,6 +149,7 @@ Conclusion:
 
 This project showcases the seamless integration of external API data, cloud storage, and automation best practices. It serves as a practical example of applying DevOps principles using Python and AWS, which are essential skills for building scalable and maintainable cloud-based applications. This project can serve as the foundation for more advanced systems involving weather data analysis, reporting, and alerting.
 
+##DevOpsAllStarChallenge 
 
 
 
