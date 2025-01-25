@@ -2,7 +2,7 @@
 
 
 
-##DevOpsAllStarChallenge 
+#DevOpsAllStarChallenge 
 
 # Sports API Management System
 
@@ -448,4 +448,4 @@ This is the same foundation used in real-world, scalable projects. The skills yo
 
 Now, let’s keep building and pushing boundaries. Sky’s the limit! 🚀
 
-##DevOpsAllStarChallenge 
+#DevOpsAllStarChallenge 
