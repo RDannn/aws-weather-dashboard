@@ -34,4 +34,4 @@ This repository is a culmination of effort, passion, and a relentless pursuit of
 
 Whether it’s building scalable cloud architectures, automating workflows, or optimizing delivery pipelines, this challenge demonstrates my readiness to take on the real-world challenges of a cloud engineer or DevOps professional. Let’s innovate together! 🚀 
 
-##DevOpsAllStarChallenge 
+#DevOpsAllStarChallenge 
