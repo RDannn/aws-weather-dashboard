@@ -1,151 +1,117 @@
-# fetch.py
+# mediaconvert_process.py
 
-# Import the 'json' module for handling JSON data
+# Import the 'json' module for handling JSON data serialization and deserialization
 import json
 
-# Import the 'boto3' library for interacting with AWS services like S3
+# Import the 'boto3' library for interacting with AWS services like MediaConvert and S3
 import boto3
-
-# Import the 'requests' library for making HTTP requests to external APIs
-import requests
 
 # Import specific configuration variables from the 'config.py' module
 from config import (
-    API_URL,             # The endpoint URL for fetching sports highlights
-    RAPIDAPI_HOST,       # The host for the RapidAPI service
-    RAPIDAPI_KEY,        # The API key for authenticating with RapidAPI
-    DATE,                # The date for which to fetch highlights
-    LEAGUE_NAME,         # The name of the basketball league (e.g., NCAA)
-    LIMIT,               # The maximum number of highlights to fetch
-    S3_BUCKET_NAME,      # The name of the S3 bucket where data will be stored
-    AWS_REGION,          # The AWS region where the S3 bucket is located
+    AWS_REGION,               # AWS region where services are deployed (e.g., 'us-east-1')
+    MEDIACONVERT_ENDPOINT,    # The endpoint URL for AWS MediaConvert service
+    MEDIACONVERT_ROLE_ARN,    # The Amazon Resource Name (ARN) for the IAM role used by MediaConvert
+    S3_BUCKET_NAME            # The name of the Amazon S3 bucket used for input/output data
 )
 
-def fetch_highlights():
+def create_job():
     """
-    Fetch basketball highlights from the API.
+    Create a MediaConvert job to process a video.
     
-    This function makes a GET request to the specified API endpoint with the necessary
-    headers and query parameters to retrieve basketball highlights. It handles any
-    request-related exceptions and returns the fetched highlights as a JSON object.
-    
-    Returns:
-        dict or None: The fetched highlights as a JSON dictionary if successful; otherwise, None.
+    This function initializes the MediaConvert client, defines the job settings,
+    and submits a job to AWS MediaConvert for processing a video file stored in S3.
     """
     try:
-        # Define the query parameters for the API request
-        query_params = {
-            "date": DATE,            # The specific date for which to fetch highlights
-            "leagueName": LEAGUE_NAME,  # The name of the league (e.g., NCAA)
-            "limit": LIMIT            # The maximum number of highlights to retrieve
-        }
-        
-        # Define the headers for the API request, including authentication details
-        headers = {
-            "X-RapidAPI-Key": RAPIDAPI_KEY,      # API key for RapidAPI authentication
-            "X-RapidAPI-Host": RAPIDAPI_HOST     # Hostname for the RapidAPI service
-        }
-
-        # Make a GET request to the API endpoint with the specified headers and query parameters
-        # Set a timeout of 120 seconds to prevent hanging requests
-        response = requests.get(API_URL, headers=headers, params=query_params, timeout=120)
-        
-        # Raise an HTTPError if the HTTP request returned an unsuccessful status code
-        response.raise_for_status()
-        
-        # Parse the JSON response from the API
-        highlights = response.json()
-        
-        # Print a success message to indicate that highlights were fetched successfully
-        print("Highlights fetched successfully!")
-        
-        # Return the parsed highlights data
-        return highlights
-
-    except requests.exceptions.RequestException as e:
-        # Catch any exceptions related to the HTTP request and print an error message
-        print(f"Error fetching highlights: {e}")
-        
-        # Return None to indicate that fetching highlights failed
-        return None
-
-def save_to_s3(data, file_name):
-    """
-    Save data to an S3 bucket.
-    
-    This function uploads the provided data to a specified S3 bucket. It first checks
-    whether the bucket exists and creates it if it does not. The data is then serialized
-    to JSON and uploaded to the S3 bucket with the specified file name.
-    
-    Args:
-        data (dict): The data to be saved to S3.
-        file_name (str): The name of the file (without extension) to be created in S3.
-    """
-    try:
-        # Initialize the S3 client using the specified AWS region
-        s3 = boto3.client("s3", region_name=AWS_REGION)
-
-        # Attempt to check if the specified S3 bucket exists by calling 'head_bucket'
-        try:
-            s3.head_bucket(Bucket=S3_BUCKET_NAME)
-            # If the bucket exists, print a confirmation message
-            print(f"Bucket {S3_BUCKET_NAME} exists.")
-        except Exception:
-            # If the bucket does not exist, print a message indicating creation
-            print(f"Bucket {S3_BUCKET_NAME} does not exist. Creating...")
-            if AWS_REGION == "us-east-1":
-                # For the 'us-east-1' region, the 'LocationConstraint' is not required
-                s3.create_bucket(Bucket=S3_BUCKET_NAME)
-            else:
-                # For other regions, specify the 'LocationConstraint' during bucket creation
-                s3.create_bucket(
-                    Bucket=S3_BUCKET_NAME,
-                    CreateBucketConfiguration={"LocationConstraint": AWS_REGION}
-                )
-            # Print a success message after creating the bucket
-            print(f"Bucket {S3_BUCKET_NAME} created successfully.")
-
-        # Define the S3 key (path) where the JSON data will be stored
-        s3_key = f"highlights/{file_name}.json"
-
-        # Upload the JSON data to the specified S3 bucket and key
-        s3.put_object(
-            Bucket=S3_BUCKET_NAME,                     # The target S3 bucket
-            Key=s3_key,                                # The S3 key (path) for the uploaded file
-            Body=json.dumps(data),                      # The JSON-serialized data to upload
-            ContentType="application/json"             # The MIME type of the uploaded file
+        # Initialize the MediaConvert client with specified region and endpoint
+        mediaconvert = boto3.client(
+            "mediaconvert",                    # AWS MediaConvert service
+            region_name=AWS_REGION,            # AWS region from configuration
+            endpoint_url=MEDIACONVERT_ENDPOINT  # MediaConvert endpoint URL from configuration
         )
-        
-        # Print a success message indicating where the data was saved in S3
-        print(f"Highlights saved to S3: s3://{S3_BUCKET_NAME}/{s3_key}")
-    
-    except Exception as e:
-        # Catch any exceptions related to S3 operations and print an error message
-        print(f"Error saving to S3: {e}")
 
-def process_highlights():
-    """
-    Main function to fetch and process basketball highlights.
-    
-    This function orchestrates the workflow of fetching basketball highlights from the API
-    and saving them to an S3 bucket. It first calls 'fetch_highlights' to retrieve the data,
-    and if successful, proceeds to call 'save_to_s3' to store the data in S3.
-    """
-    # Print a message indicating the start of the highlights fetching process
-    print("Fetching highlights...")
-    
-    # Call the 'fetch_highlights' function to retrieve highlights data from the API
-    highlights = fetch_highlights()
-    
-    # Check if highlights were successfully fetched
-    if highlights:
-        # Print a message indicating the start of the S3 saving process
-        print("Saving highlights to S3...")
-        
-        # Call the 'save_to_s3' function to upload the fetched highlights to S3
-        save_to_s3(highlights, "basketball_highlights")
+        # Define the S3 URL for the input video file to be processed
+        input_s3_url = f"s3://{S3_BUCKET_NAME}/videos/first_video.mp4"
+
+        # Define the S3 URL where the processed videos will be saved
+        output_s3_url = f"s3://{S3_BUCKET_NAME}/processed_videos/"
+
+        # Define the job settings for MediaConvert
+        job_settings = {
+            "Inputs": [  # List of input sources for the MediaConvert job
+                {
+                    "AudioSelectors": {  # Define audio selection settings
+                        "Audio Selector 1": {"DefaultSelection": "DEFAULT"}  # Select default audio track
+                    },
+                    "FileInput": input_s3_url,  # Specify the input video file S3 URL
+                    "VideoSelector": {}         # Video selection settings (empty means default)
+                }
+            ],
+            "OutputGroups": [  # Define output group settings
+                {
+                    "Name": "File Group",  # Name identifier for the output group
+                    "OutputGroupSettings": {  # Settings specific to the output group
+                        "Type": "FILE_GROUP_SETTINGS",  # Type of output group
+                        "FileGroupSettings": {  # Settings related to file group outputs
+                            "Destination": output_s3_url  # S3 destination URL for processed videos
+                        }
+                    },
+                    "Outputs": [  # List of output configurations within the output group
+                        {
+                            "ContainerSettings": {  # Container format settings
+                                "Container": "MP4",       # Output container format (MP4)
+                                "Mp4Settings": {}         # Additional MP4-specific settings (empty for defaults)
+                            },
+                            "VideoDescription": {  # Description of video settings
+                                "CodecSettings": {  # Codec configuration for video
+                                    "Codec": "H_264",  # Video codec to use (H.264)
+                                    "H264Settings": {  # Specific settings for H.264 codec
+                                        "Bitrate": 5000000,              # Bitrate in bits per second
+                                        "RateControlMode": "CBR",        # Constant Bit Rate control mode
+                                        "QualityTuningLevel": "SINGLE_PASS",  # Quality tuning level
+                                        "CodecProfile": "MAIN"            # H.264 codec profile
+                                    }
+                                },
+                                "ScalingBehavior": "DEFAULT",  # Behavior for scaling video resolution
+                                "TimecodeInsertion": "DISABLED"  # Disable timecode insertion
+                            },
+                            "AudioDescriptions": [  # List of audio configurations
+                                {
+                                    "CodecSettings": {  # Codec configuration for audio
+                                        "Codec": "AAC",  # Audio codec to use (AAC)
+                                        "AacSettings": {  # Specific settings for AAC codec
+                                            "Bitrate": 64000,           # Bitrate in bits per second
+                                            "CodingMode": "CODING_MODE_2_0",  # Audio coding mode (2.0 channels)
+                                            "SampleRate": 48000        # Audio sample rate in Hz
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+
+        # Submit the MediaConvert job with the defined settings and additional parameters
+        response = mediaconvert.create_job(
+            Role=MEDIACONVERT_ROLE_ARN,                 # IAM role ARN that MediaConvert assumes
+            Settings=job_settings,                      # Job settings defined above
+            AccelerationSettings={"Mode": "DISABLED"},  # Disable acceleration settings
+            StatusUpdateInterval="SECONDS_60",           # Interval for status updates (every 60 seconds)
+            Priority=0                                   # Priority of the job (0 is default)
+        )
+
+        # Print a success message indicating the job was created
+        print("MediaConvert job created successfully:")
+
+        # Pretty-print the JSON response from MediaConvert
+        print(json.dumps(response, indent=4))
+
+    except Exception as e:
+        # Catch any exceptions that occur during job creation and print an error message
+        print(f"Error creating MediaConvert job: {e}")
 
 # Check if this script is being run as the main program
-# If so, execute the 'process_highlights' function
 if __name__ == "__main__":
-    process_highlights()
+    # Call the 'create_job' function to initiate the MediaConvert job
+    create_job()
