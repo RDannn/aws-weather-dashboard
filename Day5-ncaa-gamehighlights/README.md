@@ -285,6 +285,11 @@ Step 2: Create S3 Bucket🪣
 
 We will now need to create the S3 bucket🪣 and its contents. Open the Cloudshell Terminal. Input this code and ensure you make your bucket unique. 'aws s3api create-bucket --bucket rddrapids --region us-east-1'. To verify the bucket input command, 'aws s3 ls'. You should see your bucket listed. Let's continue now setting up the rest of this project! 
 
+<img width="1426" alt="s3api" src="https://github.com/user-attachments/assets/983d278a-fdf3-4520-879d-21298824a359" />
+
+<img width="1421" alt="s3apils" src="https://github.com/user-attachments/assets/d4ac8fcb-6567-47e3-9d71-d8430de08106" />
+
+
 Step 3: Create Local Folder and Clone Repository🗂️
 
 Ready to dive in? Let’s set up your local environment and get rolling with this project!
@@ -356,6 +361,19 @@ Set Up the Environment:
 You can copy all of the .env config.py, etc files from my Github repository. 
 And copy to your remote Github files/folders. Commit changes concerning all folders, files, Dockerfule, etc. Once you do so remotely, go backk to 
 your local machine and in the main directory input git fetch. From there pull all of your remote changes to your local machine. For instance, I input git pull origin main. This should pull all changes. To ensure your local machine is update to date locally, input git status.
+
+<img width="1429" alt="gitpusfiles" src="https://github.com/user-attachments/assets/0458b9ff-6ec9-4cc1-bd80-d565debd4093" />
+
+
+<img width="1434" alt="gitpushorigin" src="https://github.com/user-attachments/assets/6a043987-01e7-4481-8b24-55120f0b2480" />
+
+
+<img width="1440" alt="srcfiles" src="https://github.com/user-attachments/assets/3d74ce36-aa33-4e8e-b9d3-2e9b5a90e42a" />
+
+
+<img width="1437" alt="gitstatus" src="https://github.com/user-attachments/assets/89477a5d-856c-47e5-86f4-afc31f5e366d" />
+
+
 This ensures your local environment is completely up-to-date with your remote repository.
 🎉 You’re All Set! Ready to crush the next steps? Let’s keep the momentum going! 💪
 
@@ -384,6 +402,9 @@ How to Fill These In:
 
 RAPIDAPI_KEY: Create an account on RapidAPI and search for "Sports Highlights." Subscribe to the API and grab your key from the "Subscribe to Test" section.
 
+<img width="1421" alt="sportshighlightrapidapi" src="https://github.com/user-attachments/assets/497bbe82-a220-4278-987f-a026b65f7521" />
+
+
 AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY: These keys are generated in your AWS IAM console. Make sure they’re secure.
 
 S3_BUCKET_NAME: Use the name of the S3 bucket you created earlier. For me, this is rddrapids; for you, it’ll be something unique.
@@ -409,6 +430,10 @@ Here’s where the magic happens! 🚀 Let’s build and run our project using D
 In your CLI, build the Docker container:
 docker build -t highlight-processor .
 Watch as Docker processes your image into a container. If everything’s set up correctly, you’re almost there!
+
+<img width="1429" alt="dockerbuiltprocesst" src="https://github.com/user-attachments/assets/e987a7ff-1784-4721-a549-c3fb85328473" />
+
+
 Run the container with your .env file:
 docker run --env-file .env highlight-processor
 This will kick off the entire process! Our application will:
