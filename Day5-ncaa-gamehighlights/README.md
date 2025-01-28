@@ -24,7 +24,8 @@ These are the building blocks for our project. Now, let’s dive into our first 
 
 ### fetch.py 💻
 
-<img width="1434" alt="fetchpy" src="https://github.com/user-attachments/assets/ec335498-81a6-46fc-8b32-3c8404436663" />
+<img width="1434" alt="fetchpy" src="https://github.com/user-attachments/assets/4dbf7798-f6b6-4d29-94d4-9f433c6cf1bd" />
+
 
 
 Introduction
@@ -111,6 +112,7 @@ So now we get the data saved in an S3 bucket🪣 but its just in JSOn format? We
 
 ### process_one_video.py💻
 
+<img width="1429" alt="processone" src="https://github.com/user-attachments/assets/b4f8ad51-ea06-4fc5-90a9-0918c7541bce" />
 
 
 This script’s job is pretty straightforward:
@@ -178,6 +180,9 @@ It’s all automated, and if something fails, it will let you know what went wro
 
 ### mediaconvert_process.py 💻
 
+<img width="1440" alt="mediaconvertpy" src="https://github.com/user-attachments/assets/b310620a-b289-4af4-a8ee-a2027ab4a190" />
+
+
 At the top, we import our library and set our constants. You will replace the placeholder bucket🪣 name with your unique bucket🪣 name. In the README file of this repository, you'll find the bash script needed to run the MediaConvert endpoint.
 
 Within the create_job function, we initialize our MediaConvert client using Boto3 and specify the MediaConvert endpoint for the correct AWS region. This is why we need the URL listed in the configuration!
@@ -199,6 +204,9 @@ Next code breakdown coming up!
 
 ### run_all.py 💻
 
+<img width="1440" alt="runallpy" src="https://github.com/user-attachments/assets/80cb9af6-7530-4eb5-b617-d13bf03afa4e" />
+
+
 This run_all.py script is the ultimate orchestrator—it brings together all the previous scripts we’ve worked on into a seamless pipeline! How cool is that? Code truly is powerful and fascinating! 😱🤯
 
 Now, let’s break down the magic happening here:
@@ -216,6 +224,9 @@ Here’s the catch: these scripts depend on each other. None of them can functio
 Lastly we will dive into our Dockerfile that brings everything together and executes.
 
 ### Dockerfile 💻 
+
+<img width="1357" alt="Dockerfile" src="https://github.com/user-attachments/assets/60b685bc-1d2c-4af2-bd5a-b4ef8403ceee" />
+
 
 This will build our entire container for us. First line, FROM PYTHON 3.9 slim. This tells Docker to use a lightweiht version of python 3.9 as the base for the container. This basically tells us lets set up a painting job pallete for our upcoming job. This our pyhton environment. We basically do not need to build this ourselves, it will be automatially built.
 
@@ -263,7 +274,7 @@ Step 1: Creat IAM role/user👨🏾‍💻
 We create the IAM role/user that has the proper permsissions to execute the processes we need fo our project. They have just enough access to do things 
 they need to do. Do not need full administrator level access. Depending on your role for instance, at a job, you will need the proper permissions to excecute certain processes based on the permissions level of your role. Log into the AWS console, in the search box input IAM. Click on Roles, then Create role to create a new role. For the use case, Service or use case we will select S3. We will add this trust policy shortly. We need more to interact than just S3. Click next. Under  Add Permissions search for AmazonS3FullAccess, MediaConvertFullAccess and AmazonEC2ContainerRegistryFullAccess and click next. Under Role details enter "HighlightProcessorRole" as the name. This is specifically called and used in the script itself. Select Create Role. Find the role in the list and click on it .Under Trust relationships Edit the trust policy to this: Edit the Trust Policy and replace it with this: **[IAMPolicies](resources/IAMPolicies)**:
 
-<img width="1439" alt="highlightrole" src="https://github.com/user-attachments/assets/8388324d-b707-4882-acc1-dba8e5b06029" />
+<img width="1439" alt="highlightrole" src="https://github.com/user-attachments/assets/52fc2bac-0ac1-4cc6-bc17-450d0458ef35" />
 
 
 
@@ -360,6 +371,15 @@ AWS_SECRET_ACCESS_KEY=your_aws_secret_access_key_here
 S3_BUCKET_NAME=your_S3_bucket_name_here
 MEDIACONVERT_ENDPOINT=https://your_mediaconvert_endpoint_here.amazonaws.com
 MEDIACONVERT_ROLE_ARN=arn:aws:iam::your_account_id:role/HighlightProcessorRole
+
+<img width="1439" alt="nanodotenv" src="https://github.com/user-attachments/assets/b501014e-b082-4437-9067-266c0f86c395" />
+
+
+<img width="1440" alt="nanoenv2" src="https://github.com/user-attachments/assets/4f777210-41e0-435c-836f-11d26a333183" />
+
+<img width="1434" alt="nanoenv" src="https://github.com/user-attachments/assets/c4fdf08f-b579-4f99-a315-2ad8f6ac87d1" />
+
+
 How to Fill These In:
 
 RAPIDAPI_KEY: Create an account on RapidAPI and search for "Sports Highlights." Subscribe to the API and grab your key from the "Subscribe to Test" section.
@@ -373,6 +393,9 @@ aws mediaconvert describe-endpoints
 Copy the URL and paste it here.
 
 MEDIACONVERT_ROLE_ARN: This is the ARN for the MediaConvert role you created earlier. Replace your_account_id with your actual AWS account ID.
+
+<img width="1062" alt="envfile" src="https://github.com/user-attachments/assets/9ffbe097-eb27-43ee-a793-135ee4760f16" />
+
 
 Save and close the .env file by pressing CTRL+O to save and CTRL+X to exit. To keep your environment variables secure, lock down the permissions:
 
@@ -396,14 +419,29 @@ Verify the Results 🎉
 Let’s check the output of all our hard work:
 
 S3 Bucket Contents: Navigate to your bucket, and you’ll find these folders:
+
 highlights: Download the basketball_highlights.json file to see all the game highlights (try viewing it in VS Code).
+
+<img width="1435" alt="gamehighlightjson" src="https://github.com/user-attachments/assets/e88f68fd-4673-4f1c-a54a-fdbf7426ace7" />
+
 
 videos: Contains the uploaded first_video.mp4.
 
+<img width="1434" alt="highlghtprocvidbuc" src="https://github.com/user-attachments/assets/47554468-d831-4b03-883f-0d6374cbf58c" />
+
+
 processed_videos: Holds the final converted video! 🎥
+
 MediaConvert Job Details: In the AWS Management Console, search for MediaConvert and review the job we created for first_video.mp4.
 
+<img width="1109" alt="firstvidemediacov" src="https://github.com/user-attachments/assets/ca48eb9a-35f5-4cda-9ed1-e8f356e7a565" />
+
+
+
 View the Video: Download the processed video and watch it. Enjoy the sound, game highlights, and all the enhancements we implemented! Success! 🏀
+
+<img width="1421" alt="okayvidgamehighlight" src="https://github.com/user-attachments/assets/6f4fcd16-3b99-4cef-a79d-bed54d73aeda" />
+
 
 ### What We Learned 💡
 Using Docker to containerize and manage workflows.
