@@ -128,9 +128,13 @@ Config Variables
 From config.py, we’re using:
 
 S3_BUCKET_NAME: Where everything is stored in S3.
+
 AWS_REGION: The region where the bucket🪣 lives.
+
 INPUT_KEY: The path to the JSON file with video URLs.
+
 OUTPUT_KEY: Where we’ll save the processed video.
+
 What Does the process_one_video Function Do?
 This function handles everything from retrieving the JSON file to uploading the processed video. Here's what happens:
 
@@ -138,16 +142,22 @@ Connect to S3:
 It starts by creating an S3 client (a tool to communicate with S3) and setting the AWS region.
 Fetch the JSON File:
 The script grabs the JSON file from S3 (using the bucket🪣 name and input key) and reads its content. Think of this as downloading a to-do list.
+
 Extract the Video URL:
 It opens the JSON file, looks for the first video URL, and pulls it out. You might need to adjust this depending on how your JSON file is structured.
+
 Download the Video:
 Using requests, it sends an HTTP request to the video URL to fetch the video. The stream=True option ensures we don’t overload memory by downloading everything at once.
+
 Prepare the Video for Upload:
 It stores the video content in memory using BytesIO. This is like holding the video in a temporary spot without saving it on your computer.
+
 Upload the Video to S3:
 The script uploads the video to the specified bucket🪣 and path. It also sets the file type as "video/mp4" so AWS knows what kind of file it is.
+
 Print Success or Errors:
 If everything works, it prints the S3 path where the video was uploaded. If something goes wrong, it prints the error.
+
 The Final Line:
 This part:
 
@@ -327,15 +337,21 @@ MEDIACONVERT_ROLE_ARN=arn:aws:iam::your_account_id:role/HighlightProcessorRole
 How to Fill These In:
 
 RAPIDAPI_KEY: Create an account on RapidAPI and search for "Sports Highlights." Subscribe to the API and grab your key from the "Subscribe to Test" section.
+
 AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY: These keys are generated in your AWS IAM console. Make sure they’re secure.
+
 S3_BUCKET_NAME: Use the name of the S3 bucket you created earlier. For me, this is rddrapids; for you, it’ll be something unique.
+
 MEDIACONVERT_ENDPOINT: Run the following command to find your endpoint:
 aws mediaconvert describe-endpoints
 Copy the URL and paste it here.
+
 MEDIACONVERT_ROLE_ARN: This is the ARN for the MediaConvert role you created earlier. Replace your_account_id with your actual AWS account ID.
+
 Save and close the .env file by pressing CTRL+O to save and CTRL+X to exit. To keep your environment variables secure, lock down the permissions:
 
 chmod 600 .env
+
 Finally, ensure Docker is up and running because we’re about to build and run the container for this project.
 
 Step 5: Build & Run the Docker Container Locally 🛠️
@@ -355,11 +371,15 @@ Let’s check the output of all our hard work:
 
 S3 Bucket Contents: Navigate to your bucket, and you’ll find these folders:
 highlights: Download the basketball_highlights.json file to see all the game highlights (try viewing it in VS Code).
+
 videos: Contains the uploaded first_video.mp4.
+
 processed_videos: Holds the final converted video! 🎥
 MediaConvert Job Details: In the AWS Management Console, search for MediaConvert and review the job we created for first_video.mp4.
+
 View the Video: Download the processed video and watch it. Enjoy the sound, game highlights, and all the enhancements we implemented! Success! 🏀
-What We Learned 💡
+
+### What We Learned 💡
 Using Docker to containerize and manage workflows.
 Leveraging AWS services like S3, MediaConvert, and IAM.
 The importance of least privilege and secure practices in IAM.
