@@ -212,11 +212,17 @@ Lastly we will dive into our Dockerfile that brings everything together and exec
 ### Dockerfile 💻 
 
 This will build our entire container for us. First line, FROM PYTHON 3.9 slim. This tells Docker to use a lightweiht version of python 3.9 as the base for the container. This basically tells us lets set up a painting job pallete for our upcoming job. This our pyhton environment. We basically do not need to build this ourselves, it will be automatially built.
-WORKDIR /app provides the working directory of the container. Its set /app as the current working directory inside the container. Any commands or files will be referenced to this relative directory. This is like your organized paint desk spread where you have all your tools in an organized way. COPY requirements.txt .copies a text file we create called requirements.txt  from our local machine to the containers working directory. It will the run PIP intsall, which is all of the 
+
+WORKDIR /app provides the working directory of the container. Its set /app as the current working directory inside the container. Any commands or files will be referenced to this relative directory. This is like your organized paint desk spread where you have all your tools in an organized way. 
+
+COPY requirements.txt .copies a text file we create called requirements.txt  from our local machine to the containers working directory. It will the run PIP intsall, which is all of the 
 python libraries we need in requirements.txt inside the container itself. Copying is like copying your same paint techniuqes for the paiint jobs, and PIP install is like painting all of the required coats of paint for each job. Maybe 2-3 coats are needed in the home project! 🏡🎨🖼️ requirements.txt has line of files/code, we need, PIP install make sure we get these things we need.
+
 Next COPY fetch.py process_one_video.py mediaconvert_process.py run_all.py config.py . copies all of our python scripts into the container. This is placing your paint job instuctions on the counter before working and getting your paint on! 👨🏾‍🎨 
 RUN apt-get update && apt-get install -y awscli installs the aws cli inside the container to allow us AWS access to services/resources like S3, media convert, etc.
+
 This will be adding new paint brushes, and colors for a new specific home project inside a particlar room inside the home you are working on! 🖼️🏡 We need to talk with and work with AWS services right? We need to do so with the AWS CLI.
+
 Our last line of code ENTRYPOINT ["python", "run_all.py"] sets the default command to run the pipeline entrypoint python run all.py. This will set run.py as the default command and python run all.py as the default command to execute when the container runs. The run all scripts runs all the other scripts and runs this automatic. This is our A.I. robotic painter automatically working on the painting jobs with all the tools need to get the job done! 🤖🦾🦿This Dockerfile takes all of our scripts and make sure that we build out the container with everything we need automatically. Everything we need to get our paint job done! 🎨🖼️
 
 Ok so we have broken down the code in depth details! Let's now get into our prerequisites and build this project out! 👷🏾‍♂️🧱🏡
