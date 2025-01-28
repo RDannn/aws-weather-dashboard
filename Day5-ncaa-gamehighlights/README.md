@@ -240,11 +240,17 @@ Before diving into the scripts, make sure you've got the following in place:
 Create a RapidAPI Account: 🏀
 You'll need a RapidAPI account to access highlight images and videos. For this example, we’re using NCAA (USA College Basketball) highlights, which are included for free in the basic plan. The Sports Highlights API is the endpoint we’ll be working with.
 
+<img width="1438" alt="rapidapi" src="https://github.com/user-attachments/assets/03f75523-917c-40bb-b9a7-db0ed514f7a4" />
+
+
 Verify Prerequisites are Installed: 🛠️
 Check that the following tools are installed on your system:
 Docker: Should be pre-installed in most regions. Run docker --version to verify.
 AWS CloudShell: Comes with the AWS CLI pre-installed. Verify by running aws --version.
 Python3: Make sure it's installed by running python3 --version.
+
+<img width="1268" alt="docker" src="https://github.com/user-attachments/assets/e2bb272f-91e9-4fc8-9eec-fed150cc3597" />
+
 
 Retrieve Your AWS Account ID ☁️🔑
 To get your AWS Account ID, log in to the AWS Management Console. Click on your account name in the top-right corner, and you’ll see your Account ID. Copy and save this ID somewhere secure because you’ll need it later when updating the code in the labs.
@@ -255,7 +261,12 @@ In the IAM dashboard, check under Users for your access keys. Click on your main
 Step 1: Creat IAM role/user👨🏾‍💻
 
 We create the IAM role/user that has the proper permsissions to execute the processes we need fo our project. They have just enough access to do things 
-they need to do. Do not need full administrator level access. Depending on your role for instance, at a job, you will need the proper permissions to excecute certain processes based on the permissions level of your role. Log into the AWS console, in the search box input IAM. Click on Roles, then Create role to create a new role. For the use case, Service or use case we will select S3. We will add this trust policy shortly. We need more to interact than just S3. Click next. Under  Add Permissions search for AmazonS3FullAccess, MediaConvertFullAccess and AmazonEC2ContainerRegistryFullAccess and click next. Under Role details enter "HighlightProcessorRole" as the name. This is specifically called and used in the script itself. Select Create Role. Find the role in the list and click on it .Under Trust relationships Edit the trust policy to this: Edit the Trust Policy and replace it with this: [View and Copy IAM Trust Policy](./iam-trust-policy.json)
+they need to do. Do not need full administrator level access. Depending on your role for instance, at a job, you will need the proper permissions to excecute certain processes based on the permissions level of your role. Log into the AWS console, in the search box input IAM. Click on Roles, then Create role to create a new role. For the use case, Service or use case we will select S3. We will add this trust policy shortly. We need more to interact than just S3. Click next. Under  Add Permissions search for AmazonS3FullAccess, MediaConvertFullAccess and AmazonEC2ContainerRegistryFullAccess and click next. Under Role details enter "HighlightProcessorRole" as the name. This is specifically called and used in the script itself. Select Create Role. Find the role in the list and click on it .Under Trust relationships Edit the trust policy to this: Edit the Trust Policy and replace it with this: **[IAMPolicies](resources/IAMPolicies)**:
+
+<img width="1439" alt="highlightrole" src="https://github.com/user-attachments/assets/8388324d-b707-4882-acc1-dba8e5b06029" />
+
+
+
 
 Then click Update Policy. Let's now get into our Cloudshell Terminal for the nex steps! 
 
@@ -274,6 +285,9 @@ Fire up your terminal and create a local folder to house your project. For examp
 Head to GitHub and create a repository if you haven’t already: [Create a New Repo](https://github.com/new).
 Clone your repository to your local machine. For example, my repo is named DevOps-30-Day-Challenge: git clone https://github.com/username-placeholder/DevOps-30-Day-Challenge.git
 After cloning, navigate into your project folder: cd DevOps-30-Day-Challenge
+
+<img width="1415" alt="createrepo" src="https://github.com/user-attachments/assets/87b875d7-477d-4adc-8f3d-f9ae90c9cb04" />
+
 
 3️⃣ Verify Your Structure
 Run: ls
