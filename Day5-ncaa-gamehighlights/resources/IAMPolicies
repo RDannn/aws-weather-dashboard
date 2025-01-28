@@ -1,27 +1,24 @@
 {
-	"Version": "2012-10-17",
-	"Statement": [
-		{
-			"Effect": "Allow",
-			"Action": [
-				"s3:GetObject",
-				"s3:ListBucket"
-			],
-			"Resource": [
-				"arn:aws:s3:::*",
-				"arn:aws:s3:::*/highlights/*",
-				"arn:aws:s3:::*/videos/*"
-			]
-		},
-		{
-			"Effect": "Allow",
-			"Action": [
-				"s3:PutObject"
-			],
-			"Resource": [
-				"arn:aws:s3:::*/highlights/*",
-				"arn:aws:s3:::*/videos/*"
-			]
-		}
-	]
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": {
+        "Service": [
+          "ec2.amazonaws.com",
+          "ecs-tasks.amazonaws.com",
+          "mediaconvert.amazonaws.com"
+        ]
+      },
+      "Action": "sts:AssumeRole"
+    },
+    {
+      "Effect": "Allow",
+      "Principal": {
+        "AWS": "arn:aws:iam::ACCOUNT_ID:user/USER_ID"
+      },
+      "Action": "sts:AssumeRole"
+    }
+  ]
 }
+
