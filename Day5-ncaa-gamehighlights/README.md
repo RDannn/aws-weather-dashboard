@@ -256,17 +256,17 @@ Step 3: Create Local Folder and Clone Repository🗂️
 Ready to dive in? Let’s set up your local environment and get rolling with this project!
 
 1️⃣ Create a New Folder
-Fire up your terminal and create a local folder to house your project. For example: mkdir -p "Day5-ncaa-gamehighlights". Now, move into the folder: cd "Day5-ncaa-gamehighlights"
+Fire up your terminal and create a local folder to house your project. For example: mkdir -p "Day5-ncaa-folderplaceholder". Now, move into the folder: cd "Day5-ncaa-folderplaceholder"
 
 2️⃣ Clone Your GitHub Repository
 Head to GitHub and create a repository if you haven’t already: [Create a New Repo](https://github.com/new).
-Clone your repository to your local machine. For example, my repo is named DevOps-30-Day-Challenge: git clone https://github.com/RDannn/DevOps-30-Day-Challenge.git
+Clone your repository to your local machine. For example, my repo is named DevOps-30-Day-Challenge: git clone https://github.com/username-placeholder/DevOps-30-Day-Challenge.git
 After cloning, navigate into your project folder: cd DevOps-30-Day-Challenge
 
 3️⃣ Verify Your Structure
 Run: ls
 
-Ensure you see the folders you’ve created and cloned, like Day5-ncaa-gamehighlights. Now we’ll build the file/folder structure locally and push it to GitHub.
+Ensure you see the folders you’ve created and cloned, like Day5-ncaa-folderplaceholder. Now we’ll build the file/folder structure locally and push it to GitHub.
 
 Your folder should look like this when you’re done:
 
@@ -313,8 +313,8 @@ Your folder should look like this when you’re done:
 
 1. **Clone the Repository**:
    ```bash
-   git clone https://github.com/RDannn/DevOps-30-Day-Challenge.git
-   cd DevOps-30-Day-Challenge/Day5-ncaa-gamehighlights
+   git clone https://github.com/username-placeholder/DevOps-30-Day-Challenge.git
+   cd DevOps-30-Day-Challenge/Day5-ncaa-folderplaceholder
 Set Up the Environment:
 You can copy all of the .env config.py, etc files from my Github repository. 
 And copy to your remote Github files/folders. Commit changes concerning all folders, files, Dockerfule, etc. Once you do so remotely, go backk to 
