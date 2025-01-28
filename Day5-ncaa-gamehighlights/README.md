@@ -20,9 +20,9 @@ AWS Elemental MediaConvert acts like a quality control expert. Just as a custome
 These are the building blocks for our project. Now, let’s dive into our first code files, fetch.py! 💻
 
 
-Code Breakdown: 💻
+## Code Breakdown: 💻
 
-fetch.py 💻
+### fetch.py 💻
 
 Introduction
 
@@ -31,9 +31,13 @@ This script is designed to fetch basketball highlights from an external API and 
 Module Imports and Configuration
 
 json: Converts Python dictionaries into JSON format for saving and handling structured data.
+
 boto3: AWS SDK for Python, allows us to interact with AWS services like S3.
+
 requests: A library to make HTTP requests, used here to communicate with an external API.
+
 config: Contains all reusable variables, such as API credentials, AWS settings, and league-specific parameters.
+
 This setup will ensure the script is easy to configure and scales well with changes.
 
 Function Overview
@@ -44,9 +48,13 @@ Purpose: Retrieves basketball highlights from a third-party API.
 Workflow:
 
 Step 1: Define the API parameters, such as the date, league, and limit of highlights.
+
 Step 2: Add authentication headers using the RapidAPI key and host.
+
 Step 3: Make an HTTP GET request to fetch data, ensuring timeouts prevent hanging connections.
+
 Step 4: Parse the JSON response and return it.
+
 Key Details:
 
 Error Handling: Any issues during the request, such as timeouts or invalid responses, are gracefully managed with informative error messages.
@@ -57,21 +65,26 @@ Purpose: Uploads the fetched highlights to an S3 bucket🪣.
 Workflow:
 
 Step 1: Use the boto3 client to interact with the S3 service.
+
 Step 2: Check if the target bucket🪣 exists. If not:
 Create the bucket🪣.
 Adjust for specific constraints, like LocationConstraint in non-default AWS regions.
+
 Step 3: Serialize the highlight data to JSON and save it to S3 under a predefined path (highlights/<file_name>.json).
 Key Details:
 
 Error Handling: Both bucket🪣 creation and data upload operations are wrapped in exception handling to ensure robustness.
 Output: Confirms successful uploads with the full S3 path to the saved file.
+
 3. process_highlights()
 Purpose: Orchestrates the process of fetching and saving highlights.
 
 Workflow:
 
 Step 1: Start by fetching highlights using fetch_highlights().
+
 Step 2: If the data retrieval is successful, call save_to_s3() to upload the highlights.
+
 Step 3: Log progress at each step for transparency and troubleshooting.
 This function acts as the script's control center, streamlining the overall workflow.
 
@@ -102,9 +115,13 @@ Let’s break it down step by step:
 
 Imports (The Tools We’ll Use)
 json: This helps us work with JSON data—think of it like a structured way of handling data.
+
 boto3: This is the Python library we use to talk to AWS services like S3.
+
 requests: This is what we’ll use to download videos from the web by sending HTTP requests.
+
 BytesIO: This lets us handle files (like videos) in memory without saving them to disk.
+
 config.py: This is like a settings file where we keep important variables (example like S3 bucket🪣 names and file paths).
 
 Config Variables
@@ -143,7 +160,7 @@ Fetch/retrieve JSON from S3 to Get Video URL to Download Video to Upload Video t
 It’s all automated, and if something fails, it will let you know what went wrong.
 
 
-mediaconvert_process.py 💻
+### mediaconvert_process.py 💻
 
 At the top, we import our library and set our constants. You will replace the placeholder bucket🪣 name with your unique bucket🪣 name. In the README file of this repository, you'll find the bash script needed to run the MediaConvert endpoint.
 
@@ -164,7 +181,7 @@ Finally, the script specifies the entry point so the create_job function runs wh
 Next code breakdown coming up!
 
 
-run_all.py 💻
+### run_all.py 💻
 
 This run_all.py script is the ultimate orchestrator—it brings together all the previous scripts we’ve worked on into a seamless pipeline! How cool is that? Code truly is powerful and fascinating! 😱🤯
 
@@ -182,7 +199,7 @@ Here’s the catch: these scripts depend on each other. None of them can functio
 
 Lastly we will dive into our Dockerfile that brings everything together and executes.
 
-Dockerfile 💻 
+### Dockerfile 💻 
 
 This will build our entire container for us. First line, FROM PYTHON 3.9 slim. This tells Docker to use a lightweiht version of python 3.9 as the base for the container. This basically tells us lets set up a painting job pallete for our upcoming job. This our pyhton environment. We basically do not need to build this ourselves, it will be automatially built.
 WORKDIR /app provides the working directory of the container. Its set /app as the current working directory inside the container. Any commands or files will be referenced to this relative directory. This is like your organized paint desk spread where you have all your tools in an organized way. COPY requirements.txt .copies a text file we create called requirements.txt  from our local machine to the containers working directory. It will the run PIP intsall, which is all of the 
