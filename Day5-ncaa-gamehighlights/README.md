@@ -24,6 +24,9 @@ These are the building blocks for our project. Now, let’s dive into our first 
 
 ### fetch.py 💻
 
+<img width="1434" alt="fetchpy" src="https://github.com/user-attachments/assets/ec335498-81a6-46fc-8b32-3c8404436663" />
+
+
 Introduction
 
 This script is designed to fetch basketball highlights from an external API and save them securely in an Amazon S3 bucket🪣. It integrates API processes/consumption, AWS services, and Python to automate data processing. Below is a breakdown of the key components and their roles in this workflow. This will fetch from our RAPID API external API NCAA game highlights. The collegiate level of American basketball to be exact! 🏀. This is within the free tier of the RAPID API external API we will be using. Enough explaining, lets dive in! 
@@ -106,7 +109,10 @@ Error Resilience: Builds fault tolerance into workflows, ensuring smooth operati
 
 So now we get the data saved in an S3 bucket🪣 but its just in JSOn format? We need to process this into 1 video format! Let's now checout, process_one_video.py.
 
-process_one_video.py
+### process_one_video.py💻
+
+
+
 This script’s job is pretty straightforward:
 
 It grabs a file (JSON) from S3 that contains video URLs.
